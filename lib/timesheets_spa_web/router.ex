@@ -17,6 +17,9 @@ defmodule TimesheetsSpaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    # Add our paths to the Phoenix router, just loading our index page.
+    # React-Router will figure out what to do from there.
+    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.
