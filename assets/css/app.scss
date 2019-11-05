@@ -1,0 +1,5 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+$body-bg: #BBB; // With scss, Bootstrap lets us override colors and stuff.
+@import "~bootstrap/scss/bootstrap";

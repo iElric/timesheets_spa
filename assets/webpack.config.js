@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const webpack = require('webpack');
 module.exports = (env, options) => ({
   optimization: {
     minimizer: [
@@ -29,13 +30,36 @@ module.exports = (env, options) => ({
         }
       },
       {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          },
+        },
       }
     ]
   },
+  devtool: 'cheap-module-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.css', '.scss'],
+  },
   plugins: [
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      Popper: ['popper.js', 'default'],
+    }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
   ]
 });
