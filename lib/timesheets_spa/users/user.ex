@@ -29,6 +29,7 @@ defmodule TimesheetsSpa.Users.User do
     |> validate_length(:password, min: 12) # too short
     |> hash_password()
     |> validate_required([:email, :name, :password_hash])
+    |> unique_constraint(:email)
   end
 
   def hash_password(cset) do
