@@ -13,7 +13,7 @@ defmodule TimesheetsSpaWeb.JobView do
   def render("job.json", %{job: job}) do
     %{id: job.id,
       budget: job.budget,
-      jodcode: job.jodcode,
+      jobcode: job.jobcode,
       desc: job.desc,
       name: job.name}
   end

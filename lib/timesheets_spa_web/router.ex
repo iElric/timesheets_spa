@@ -23,6 +23,7 @@ defmodule TimesheetsSpaWeb.Router do
   scope "/ajax", TimesheetsSpaWeb do
     pipe_through :ajax
 
+    resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/users", UserController, except: [:new, :edit]
     resources "/jobs", JobController, except: [:new, :edit]
     resources "/sheets", SheetController, except: [:new, :edit]

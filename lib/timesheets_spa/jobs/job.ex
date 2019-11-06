@@ -17,8 +17,8 @@ defmodule TimesheetsSpa.Jobs.Job do
   @doc false
   def changeset(job, attrs) do
     job
-    |> cast(attrs, [:budget, :jodcode, :desc, :name])
-    |> validate_required([:budget, :jodcode, :desc, :name])
+    |> cast(attrs, [:budget, :jobcode, :desc, :name])
+    |> validate_required([:budget, :jobcode, :desc, :name])
     |> unique_constraint(:jobcode)
   end
 end

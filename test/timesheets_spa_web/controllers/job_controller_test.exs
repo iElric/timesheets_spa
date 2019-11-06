@@ -7,16 +7,16 @@ defmodule TimesheetsSpaWeb.JobControllerTest do
   @create_attrs %{
     budget: 42,
     desc: "some desc",
-    jodcode: "some jodcode",
+    jobcode: "some jobcode",
     name: "some name"
   }
   @update_attrs %{
     budget: 43,
     desc: "some updated desc",
-    jodcode: "some updated jodcode",
+    jobcode: "some updated jobcode",
     name: "some updated name"
   }
-  @invalid_attrs %{budget: nil, desc: nil, jodcode: nil, name: nil}
+  @invalid_attrs %{budget: nil, desc: nil, jobcode: nil, name: nil}
 
   def fixture(:job) do
     {:ok, job} = Jobs.create_job(@create_attrs)
@@ -45,7 +45,7 @@ defmodule TimesheetsSpaWeb.JobControllerTest do
                "id" => id,
                "budget" => 42,
                "desc" => "some desc",
-               "jodcode" => "some jodcode",
+               "jobcode" => "some jobcode",
                "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
@@ -69,7 +69,7 @@ defmodule TimesheetsSpaWeb.JobControllerTest do
                "id" => id,
                "budget" => 43,
                "desc" => "some updated desc",
-               "jodcode" => "some updated jodcode",
+               "jobcode" => "some updated jobcode",
                "name" => "some updated name"
              } = json_response(conn, 200)["data"]
     end

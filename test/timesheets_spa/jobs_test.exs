@@ -6,9 +6,9 @@ defmodule TimesheetsSpa.JobsTest do
   describe "jobs" do
     alias TimesheetsSpa.Jobs.Job
 
-    @valid_attrs %{budget: 42, desc: "some desc", jodcode: "some jodcode", name: "some name"}
-    @update_attrs %{budget: 43, desc: "some updated desc", jodcode: "some updated jodcode", name: "some updated name"}
-    @invalid_attrs %{budget: nil, desc: nil, jodcode: nil, name: nil}
+    @valid_attrs %{budget: 42, desc: "some desc", jobcode: "some jobcode", name: "some name"}
+    @update_attrs %{budget: 43, desc: "some updated desc", jobcode: "some updated jobcode", name: "some updated name"}
+    @invalid_attrs %{budget: nil, desc: nil, jobcode: nil, name: nil}
 
     def job_fixture(attrs \\ %{}) do
       {:ok, job} =
@@ -33,7 +33,7 @@ defmodule TimesheetsSpa.JobsTest do
       assert {:ok, %Job{} = job} = Jobs.create_job(@valid_attrs)
       assert job.budget == 42
       assert job.desc == "some desc"
-      assert job.jodcode == "some jodcode"
+      assert job.jobcode == "some jobcode"
       assert job.name == "some name"
     end
 
@@ -46,7 +46,7 @@ defmodule TimesheetsSpa.JobsTest do
       assert {:ok, %Job{} = job} = Jobs.update_job(job, @update_attrs)
       assert job.budget == 43
       assert job.desc == "some updated desc"
-      assert job.jodcode == "some updated jodcode"
+      assert job.jobcode == "some updated jobcode"
       assert job.name == "some updated name"
     end
 
