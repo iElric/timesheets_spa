@@ -6,6 +6,10 @@ defmodule TimesheetsSpaWeb.JobView do
     %{data: render_many(jobs, JobView, "job.json")}
   end
 
+  def render("jobcodes.json", %{jobcodes: jobcodes}) do
+    %{jobcodes: jobcodes}
+  end
+
   def render("show.json", %{job: job}) do
     %{data: render_one(job, JobView, "job.json")}
   end

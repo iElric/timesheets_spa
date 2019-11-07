@@ -7,8 +7,8 @@ defmodule TimesheetsSpaWeb.JobController do
   action_fallback TimesheetsSpaWeb.FallbackController
 
   def index(conn, _params) do
-    jobs = Jobs.list_jobs()
-    render(conn, "index.json", jobs: jobs)
+    jobcodes = Jobs.list_jobcodes()
+    render(conn, "jobcodes.json", jobcodes: jobcodes)
   end
 
   def create(conn, %{"job" => job_params}) do

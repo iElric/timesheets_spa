@@ -27,12 +27,29 @@ function login(st0 = { email: "", password: "", errors: null }, action) {
 
 
 function new_timesheets(st0 = {
+  options: null,
   jobcodes: ["", "", "", "", "", "", "", ""],
   hours: [0, 0, 0, 0, 0, 0, 0, 0],
   descs: ["", "", "", "", "", "", "", ""],
+  date: null,
   errors: null
 }, action) {
   switch (action.type) {
+    case "ALL_JOBCODES":
+      return Object.assign({}, st0, { options: action.data });
+    case "CHANGE_JOBCODE":
+      let new_jobcodes = st0.jobcodes.map((j, i) => i === action.index ? action.data : j);
+      console.log(Object.assign({}, st0, { jobcodes: new_jobcodes }));
+      return Object.assign({}, st0, { jobcodes: new_jobcodes });
+    case "CHANGE_DESC":
+      let new_descs = st0.descs.map((j, i) => i === action.index ? action.data : j);
+      console.log(Object.assign({}, st0, { descs: new_descs }));
+      return Object.assign({}, st0, { descs: new_descs });
+    case "CHANGE_HOUR":
+      let new_hours = st0.hours.map((j, i) => i === action.index ? action.data : j);
+      console.log(new_hours);
+      console.log(Object.assign({}, st0, { hours: new_hours }));
+      return Object.assign({}, st0, { hours: new_hours });
     default:
       return st0;
   }

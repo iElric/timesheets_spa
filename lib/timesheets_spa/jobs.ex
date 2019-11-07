@@ -8,6 +8,26 @@ defmodule TimesheetsSpa.Jobs do
 
   alias TimesheetsSpa.Jobs.Job
 
+  def get_job_id_by_jobcode(jobcode) do
+    Repo.get_by(Job, jobcode: jobcode).id
+  end
+
+  def get_jobcode(id) do
+    get_job!(id).jobcode
+  end
+
+  def get_budget(id) do
+    Repo.get(Job, id).budget
+  end
+
+  @doc """
+  Return all the jobcodes.
+  """
+  def list_jobcodes do
+    jobs = Repo.all(Job)
+    Enum.map(jobs, fn(job)-> job.jobcode end)
+  end
+
   @doc """
   Returns the list of jobs.
 
