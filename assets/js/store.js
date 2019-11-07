@@ -16,22 +16,28 @@ function session(st0 = session0, action) {
   }
 }
 
-function login(st0 = {email: "", password: "", errors: null}, action) {
-    switch(action.type) {
-      case 'CHANGE_LOGIN':
-        return Object.assign({}, st0, action.data);
-      default:
-        return st0;
-    }
+function login(st0 = { email: "", password: "", errors: null }, action) {
+  switch (action.type) {
+    case 'CHANGE_LOGIN':
+      return Object.assign({}, st0, action.data);
+    default:
+      return st0;
   }
-  
-  function forms(st0, action) {
-    let reducer = combineReducers({
-      login,
-    });
-    return reducer(st0, action);
+}
+
+
+function new_timesheets(st0 = {
+  jobcodes: ["", "", "", "", "", "", "", ""],
+  hours: [0, 0, 0, 0, 0, 0, 0, 0],
+  descs: ["", "", "", "", "", "", "", ""],
+  errors: null
+}, action) {
+  switch (action.type) {
+    default:
+      return st0;
   }
-  
+}
+
 
 /* A Redux reducer is just a JavaScript 
 function. It takes two parameters: the 
@@ -39,7 +45,9 @@ current state and action  */
 function root_reducer(st0, action) {
   console.log("root reducer", st0, action);
   let reducer = combineReducers({
+    login,
     session,
+    new_timesheets,
   });
   return deepFreeze(reducer(st0, action));
 }

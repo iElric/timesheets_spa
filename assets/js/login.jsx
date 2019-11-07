@@ -66,7 +66,7 @@ class Login extends React.Component {
 }
 
 function state2props(state) {
-  return state.forms.login;
+  return state.login;
 }
 
 export default connect(state2props)(Login);

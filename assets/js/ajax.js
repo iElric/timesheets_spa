@@ -17,11 +17,26 @@ export function post(path, body) {
     }).then((resp) => resp.json());
   }
 
+  export function login_post(path, body) {
+    let state = store.getState();
+  
+    return fetch('/ajax' + path, {
+      method: 'post',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'x-csrf-token': window.csrf_token,
+        'content-type': "application/json; charset=UTF-8",
+        'accept': 'application/json',
+      }),
+      body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+  }
+
 export function submit_login(form) {
     let state = store.getState();
-    let data = state.forms.login;
+    let data = state.login;
 
-    post('/sessions', data)
+    login_post('/sessions', data)
         .then((resp) => {
             console.log(resp);
             if (resp.token) {
@@ -31,7 +46,7 @@ export function submit_login(form) {
                     type: 'LOG_IN',
                     data: resp,
                 });
-                form.redirect('/');
+                form.redirect('/timesheets/new');
             }
             else {
                 store.dispatch({
