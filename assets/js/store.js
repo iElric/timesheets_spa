@@ -29,9 +29,9 @@ function login(st0 = { email: "", password: "", errors: null }, action) {
 function new_timesheets(st0 = {
   options: null,
   jobcodes: ["", "", "", "", "", "", "", ""],
-  hours: [0, 0, 0, 0, 0, 0, 0, 0],
+  hours: ["", "", "", "", "", "", "", ""],
   descs: ["", "", "", "", "", "", "", ""],
-  date: null,
+  date: "",
   errors: null
 }, action) {
   switch (action.type) {
@@ -50,6 +50,8 @@ function new_timesheets(st0 = {
       console.log(new_hours);
       console.log(Object.assign({}, st0, { hours: new_hours }));
       return Object.assign({}, st0, { hours: new_hours });
+    case "CHANGE_DATE":
+      return Object.assign({}, st0, { date: action.data });
     default:
       return st0;
   }

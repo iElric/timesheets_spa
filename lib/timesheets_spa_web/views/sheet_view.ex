@@ -6,6 +6,10 @@ defmodule TimesheetsSpaWeb.SheetView do
     %{data: render_many(sheets, SheetView, "sheet.json")}
   end
 
+  def render("status.json", %{status: status}) do
+    %{status: status}
+  end
+
   def render("show.json", %{sheet: sheet}) do
     %{data: render_one(sheet, SheetView, "sheet.json")}
   end

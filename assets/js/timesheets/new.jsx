@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Select from 'react-select'
 import { connect } from 'react-redux';
 import { Form, Button, Alert, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import { all_jobcodes } from '../ajax';
+import { create_sheet } from '../ajax';
 
 
 class TimesheetsNew extends React.Component {
@@ -40,6 +42,13 @@ class TimesheetsNew extends React.Component {
 			type: "CHANGE_DESC",
 			data: data,
 			index: index
+		})
+	}
+
+	date_changed(data) {
+		this.props.dispatch({
+			type: "CHANGE_DATE",
+			data: data
 		})
 	}
 
@@ -92,6 +101,10 @@ class TimesheetsNew extends React.Component {
 		return (
 			<div>
 				<Form>
+					<Form.Row>
+						<Form.Label>date</Form.Label>
+						<input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
+					</Form.Row>
 					<Task onJobCode={e => this.jobcode_changed(e.target.value, 0)}
 						onHour={e => this.hour_changed(e.target.value, 0)}
 						onDesc={e => this.desc_changed(e.target.value, 0)}
@@ -124,6 +137,11 @@ class TimesheetsNew extends React.Component {
 						onHour={e => this.hour_changed(e.target.value, 7)}
 						onDesc={e => this.desc_changed(e.target.value, 7)}
 						options={options} />
+					<Button variant="primary" onClick={() => {
+						create_sheet(this);
+					}}>
+						Submit
+        </Button>
 				</Form>
 			</div>
 
@@ -146,7 +164,7 @@ function Task(props) {
 						</option>
 					))} */}
 				<Form.Control type="job_code" placeholder="Enter Job Code" onChange={onJobCode} />
-
+				<Select options = {options}/>
 			</Form.Group >
 
 			<Form.Group as={Col} controlId="formGridHour">

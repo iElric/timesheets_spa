@@ -8,7 +8,7 @@ export function all_jobcodes() {
       store.dispatch({
         type: 'ALL_JOBCODES',
         data: resp,
-      }); 
+      });
     });
 }
 
@@ -17,14 +17,14 @@ export function get(path) {
   let token = state.session.token;
 
   return fetch('/ajax' + path, {
-      method: 'get',
-      credentials: 'same-origin',
-      headers: new Headers({
-          'x-csrf-token': window.csrf_token,
-          'content-type': "application/json; charset=UTF-8",
-          'accept': 'application/json',
-          'x-auth': token || "",
-      }),
+    method: 'get',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'x-csrf-token': window.csrf_token,
+      'content-type': "application/json; charset=UTF-8",
+      'accept': 'application/json',
+      'x-auth': token || "",
+    }),
   }).then((resp) => resp.json());
 }
 
@@ -84,4 +84,13 @@ export function submit_login(form) {
         });
       }
     });
+}
+
+export function create_sheet(form) {
+  let data = store.getState().new_timesheets;
+  console.log(data);
+  let user_id = JSON.parse(localStorage.getItem("session")).user_id
+  post("/sheets", Object.assign({}, data, {user_id: user_id})).then(resp => {
+    alert(resp.status);
+  });
 }

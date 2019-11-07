@@ -14,6 +14,7 @@ defmodule TimesheetsSpaWeb.SessionController do
       conn
       |> put_resp_header("content-type", "application/json; charset=UTF-8")
       |> send_resp(:created, Jason.encode!(resp))
+      |> put_session(:user_id, user.id)
     else
       resp = %{errors: ["Authentication Failed"]}
       conn
