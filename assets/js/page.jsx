@@ -5,6 +5,7 @@ import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import TimesheetsNew from './timesheets/new';
 import ShowTimeSheet from './timesheets/show';
+import ApproveTimeSheet from './timesheets/approve';
 
 import Login from './login';
 import store from './store';
@@ -48,6 +49,9 @@ function Page(props) {
         <Route exact path="/timesheets/show">
           <ShowTimeSheet />
         </Route>
+        <Route exact path="/timesheets/approve">
+          <ApproveTimeSheet />
+        </Route>
       </Switch>
     </Router>
   );
@@ -73,6 +77,9 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           <Nav.Item>
             <a className="nav-link" href="#" onClick={logout}>Logout</a>
           </Nav.Item>
+          <NavLink to="/timesheets/approve" exact activeClassName="active" className="nav-link">
+            Approve
+          </NavLink>
         </Nav>
       );
     } else {

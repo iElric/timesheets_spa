@@ -21,8 +21,8 @@ defmodule TimesheetsSpaWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Users.get_user!(id)
-    render(conn, "show.json", user: user)
+    worker_names = TimesheetsSpa.Users.get_worker_names_by_manager_id(id)
+    render(conn, "show_workers.json", worker_names: worker_names)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

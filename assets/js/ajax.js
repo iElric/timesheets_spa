@@ -77,7 +77,11 @@ export function submit_login(form) {
           type: 'LOG_IN',
           data: resp,
         });
-        form.redirect('/timesheets/new');
+        if (JSON.parse(localStorage.getItem("session")).is_manager) {
+          form.redirect('/timesheets/approve')
+        } else {
+          form.redirect('/timesheets/new');
+        }
       }
       else {
         store.dispatch({
@@ -92,7 +96,7 @@ export function create_sheet(form) {
   let data = store.getState().new_timesheets;
   console.log(data);
   let user_id = JSON.parse(localStorage.getItem("session")).user_id;
-  post("/sheets", Object.assign({}, data, {user_id: user_id})).then(resp => {
+  post("/sheets", Object.assign({}, data, { user_id: user_id })).then(resp => {
     alert(resp.status);
   });
 }
@@ -100,11 +104,24 @@ export function create_sheet(form) {
 export function show_sheet(form) {
   let data = store.getState().new_timesheets;
   let user_id = JSON.parse(localStorage.getItem("session")).user_id;
-  post("/sheets/show_sheet", Object.assign({}, data, {user_id: user_id})).then(resp => {
+  post("/sheets/show_sheet", Object.assign({}, data, { user_id: user_id })).then(resp => {
     store.dispatch({
       type: "CHANGE_TASKS",
       data: resp.tasks,
     })
   });
-  
+}
+
+export function all_workers(form) {
+  let user_id = JSON.parse(localStorage.getItem("session")).user_id;
+  console.log(user_id);
+  /* This will go to user_controller's show function */
+  get('/users/' + user_id)
+  .then((resp) => {
+    console.log(resp);
+    store.dispatch({
+      type: "ALL_WORKERS",
+      data: resp.worker_names,
+    })
+  });
 }

@@ -16,4 +16,8 @@ defmodule TimesheetsSpaWeb.UserView do
       email: user.email,
       password_hash: user.password_hash}
   end
+
+  def render("show_workers.json", %{worker_names: worker_names}) do
+    %{worker_names: worker_names}
+  end
 end

@@ -77,7 +77,25 @@ function show_timesheets(st0 = {
     default:
       return st0;
   }
+}
 
+function approve_timesheets(st0 = {
+  date: "",
+  // this is the selected worker name
+  worker_name: null,
+  // this is all worker names for select
+  options: null,
+}, action) {
+  switch (action.type) {
+    case "ALL_WORKERS":
+      return Object.assign({}, st0, { options: action.data });
+    case "CHANGE_DATE":
+      return Object.assign({}, st0, { date: action.data });
+    case "CHANGE_WORKER":
+      return Object.assign({}, st0, { worker_name: action.data });
+    default:
+      return st0;
+  }
 }
 
 
@@ -91,6 +109,7 @@ function root_reducer(st0, action) {
     session,
     new_timesheets,
     show_timesheets,
+    approve_timesheets,
   });
   return deepFreeze(reducer(st0, action));
 }
