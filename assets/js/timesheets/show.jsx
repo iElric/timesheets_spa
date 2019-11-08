@@ -65,6 +65,7 @@ class ShowTimeSheet extends React.Component {
           <tbody>
             {
               tasks.map((t, i) => {
+                return (
                 <tr>
                   <td>
                     {i + 1}
@@ -79,9 +80,9 @@ class ShowTimeSheet extends React.Component {
                     {t.desc}
                   </td>
                   <td>
-                    {t.status}
+                    {t.status.toString()}
                   </td>
-                </tr>;
+                </tr>);
               })
             }
           </tbody>
