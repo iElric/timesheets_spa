@@ -23,7 +23,7 @@ class ShowTimeSheet extends React.Component {
 
   date_changed(data) {
     this.props.dispatch({
-      type: "CHANGE_DATE",
+      type: "CHANGE_SHOW_DATE",
       data: data
     })
   }

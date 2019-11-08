@@ -29,6 +29,8 @@ defmodule TimesheetsSpaWeb.Router do
     resources "/sheets", SheetController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
     post "/sheets/show_sheet", SheetController, :show_sheet
+    post "/sheets/show_worker_sheet", SheetController, :show_worker_sheet
+    post "/sheets/approve", SheetController, :approve
   end
 
   scope "/", TimesheetsSpaWeb do

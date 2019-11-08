@@ -119,12 +119,13 @@ defmodule TimesheetsSpaWeb.SheetController do
 
   def show_sheet(conn, %{"user_id" => user_id, "date" => date}) do
     date =
-    if date === "" do
-      Date.utc_today()
-    else
-      {_, date} = Date.from_iso8601(date)
-      date
-    end
+      if date === "" do
+        Date.utc_today()
+      else
+        {_, date} = Date.from_iso8601(date)
+        date
+      end
+
     current_user = user_id
     status = TimesheetsSpa.Sheets.get_status_by_worker_id_date(current_user, date)
     sheet_id = TimesheetsSpa.Sheets.get_id_by_worker_id_date(current_user, date)
@@ -162,6 +163,65 @@ defmodule TimesheetsSpaWeb.SheetController do
   def show(conn, %{"id" => id}) do
     sheet = Sheets.get_sheet!(id)
     render(conn, "show.json", sheet: sheet)
+  end
+
+  def show_worker_sheet(conn, %{
+        "user_id" => user_id,
+        "date" => date,
+        "worker_name" => worker_name
+      }) do
+    # handle the case when worker name is not selected
+    worker_name =
+      if is_nil(worker_name) do
+        [head | _] = TimesheetsSpa.Users.get_worker_names_by_manager_id(user_id)
+        head
+      else
+        worker_name
+      end
+
+    worker_id = TimesheetsSpa.Users.get_id_by_name(worker_name)
+    show_sheet(conn, %{"user_id" => worker_id, "date" => date})
+  end
+
+  def approve(conn, %{
+        "user_id" => user_id,
+        "date" => date,
+        "worker_name" => worker_name
+      }) do
+    # handle the case when worker name is not selected
+    date_string = date
+    worker_name =
+      if is_nil(worker_name) do
+        [head | _] = TimesheetsSpa.Users.get_worker_names_by_manager_id(user_id)
+        head
+      else
+        worker_name
+      end
+
+    worker_id = TimesheetsSpa.Users.get_id_by_name(worker_name)
+
+    date =
+      if date === "" do
+        Date.utc_today()
+      else
+        {_, date} = Date.from_iso8601(date)
+        date
+      end
+
+    sheet_id = TimesheetsSpa.Sheets.get_id_by_worker_id_date(worker_id, date)
+    # change the corresponding sheet status
+    TimesheetsSpa.Sheets.update_sheet(TimesheetsSpa.Sheets.get_sheet!(sheet_id), %{status: true})
+    # subtract the task hours in job
+    tasks = TimesheetsSpa.Tasks.get_tasks_by_sheet_id(sheet_id)
+    itr = Enum.map(tasks, fn t -> {t.spent_hours, t.job_id} end)
+
+    Enum.map(itr, fn {hour, job_id} ->
+      TimesheetsSpa.Jobs.update_job(TimesheetsSpa.Jobs.get_job!(job_id), %{
+        budget: TimesheetsSpa.Jobs.get_budget(job_id) - hour
+      })
+    end)
+
+    show_sheet(conn, %{"user_id" => worker_id, "date" => date_string})
   end
 
   def update(conn, %{"id" => id, "sheet" => sheet_params}) do

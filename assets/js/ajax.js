@@ -112,6 +112,17 @@ export function show_sheet(form) {
   });
 }
 
+export function show_worker_sheet(form) {
+  let data = store.getState().approve_timesheets;
+  let user_id = JSON.parse(localStorage.getItem("session")).user_id;
+  post("/sheets/show_worker_sheet", Object.assign({}, data, { user_id: user_id })).then(resp => {
+    store.dispatch({
+      type: "CHANGE_APPROVE_TASKS",
+      data: resp.tasks,
+    })
+  });
+}
+
 export function all_workers(form) {
   let user_id = JSON.parse(localStorage.getItem("session")).user_id;
   console.log(user_id);
@@ -124,4 +135,16 @@ export function all_workers(form) {
       data: resp.worker_names,
     })
   });
+}
+
+export function approve(form) {
+  let data = store.getState().approve_timesheets;
+  let user_id = JSON.parse(localStorage.getItem("session")).user_id;
+  post("/sheets/approve", Object.assign({}, data, { user_id: user_id })).then(resp => {
+    store.dispatch({
+      type: "CHANGE_APPROVE_TASKS",
+      data: resp.tasks,
+    })
+  });
+
 }

@@ -70,7 +70,7 @@ function show_timesheets(st0 = {
   errors: null
 }, action) {
   switch (action.type) {
-    case "CHANGE_DATE":
+    case "CHANGE_SHOW_DATE":
       return Object.assign({}, st0, { date: action.data });
     case "CHANGE_TASKS":
       return Object.assign({}, st0, { tasks: action.data });
@@ -85,14 +85,17 @@ function approve_timesheets(st0 = {
   worker_name: null,
   // this is all worker names for select
   options: null,
+  tasks: [],
 }, action) {
   switch (action.type) {
     case "ALL_WORKERS":
       return Object.assign({}, st0, { options: action.data });
-    case "CHANGE_DATE":
+    case "CHANGE_APPROVE_DATE":
       return Object.assign({}, st0, { date: action.data });
     case "CHANGE_WORKER":
       return Object.assign({}, st0, { worker_name: action.data });
+    case "CHANGE_APPROVE_TASKS":
+      return Object.assign({}, st0, { tasks: action.data });
     default:
       return st0;
   }
