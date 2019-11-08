@@ -21,6 +21,20 @@ defmodule TimesheetsSpa.Sheets do
     Repo.all(Sheet)
   end
 
+  def get_status_by_worker_id_date(worker_id, date) do
+    query =
+      from(s in Sheet, where: s.worker_id == ^worker_id, where: s.date == ^date, select: s.status)
+
+    Repo.one(query)
+  end
+
+  def get_id_by_worker_id_date(worker_id, date) do
+    query =
+      from(s in Sheet, where: s.worker_id == ^worker_id, where: s.date == ^date, select: s.id)
+
+    Repo.one(query)
+  end
+
   @doc """
   Gets a single sheet.
 
@@ -48,11 +62,20 @@ defmodule TimesheetsSpa.Sheets do
       iex> create_sheet(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
+      doesn’t create duplicates, return
+      {:error, "One person can only have one timesheet on a day"}
+      if already exist
+
   """
   def create_sheet(attrs \\ %{}) do
-    %Sheet{}
+    {:ok, sheet} = %Sheet{}
     |> Sheet.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: :nothing)
+    if is_nil(sheet.id) do
+      {:error, "One person can only have one timesheet on a day"}
+    else
+      {:ok, sheet}
+    end
   end
 
   @doc """

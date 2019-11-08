@@ -52,9 +52,32 @@ function new_timesheets(st0 = {
       return Object.assign({}, st0, { hours: new_hours });
     case "CHANGE_DATE":
       return Object.assign({}, st0, { date: action.data });
+    /* case "INIT_JOBCODES":
+      let jb = [];
+      for (let i = 0; i < 8; i++) {
+        jb.push(action.data);
+      }
+      console.log(jb);
+      return Object.assign({}, st0, {jobcodes: jb}); */
     default:
       return st0;
   }
+}
+
+function show_timesheets(st0 = {
+  tasks: [],
+  date: "",
+  errors: null
+}, action) {
+  switch (action.type) {
+    case "CHANGE_DATE":
+      return Object.assign({}, st0, { date: action.data });
+    case "CHANGE_TASKS":
+      return Object.assign({}, st0, { tasks: action.data });
+    default:
+      return st0;
+  }
+
 }
 
 
@@ -67,6 +90,7 @@ function root_reducer(st0, action) {
     login,
     session,
     new_timesheets,
+    show_timesheets,
   });
   return deepFreeze(reducer(st0, action));
 }

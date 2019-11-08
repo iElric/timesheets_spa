@@ -15,8 +15,10 @@ defmodule TimesheetsSpaWeb.SheetView do
   end
 
   def render("sheet.json", %{sheet: sheet}) do
-    %{id: sheet.id,
-      status: sheet.status,
-      date: sheet.date}
+    %{id: sheet.id, status: sheet.status, date: sheet.date}
+  end
+
+  def render("show_sheet.json", %{tasks: tasks}) do
+    %{tasks: tasks}
   end
 end

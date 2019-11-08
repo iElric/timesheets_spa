@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-rou
 import { Navbar, Nav, Col } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import TimesheetsNew from './timesheets/new';
+import ShowTimeSheet from './timesheets/show';
 
 import Login from './login';
 import store from './store';
@@ -44,6 +45,9 @@ function Page(props) {
         <Route exact path="/timesheets/new">
           <TimesheetsNew />
         </Route>
+        <Route exact path="/timesheets/show">
+          <ShowTimeSheet />
+        </Route>
       </Switch>
     </Router>
   );
@@ -59,6 +63,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
   }
 
   if (session) {
+    /* manager */
     if (session.is_manager) {
       return (
         <Nav>
@@ -71,15 +76,21 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
         </Nav>
       );
     } else {
+      /* worker */
       return (
         <Nav>
           <Nav.Item>
             <NavLink to="/timesheets/new" exact activeClassName="active" className="nav-link">
-              New Timesheets
+              Create
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <p className="text-light py-2">User: {session.user_name}</p>
+            <NavLink to="/timesheets/show" exact activeClassName="active" className="nav-link">
+              Show
+            </NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <p className="text-light py-2">{session.user_name}</p>
           </Nav.Item>
           <Nav.Item>
             <a className="nav-link" href="#" onClick={logout}>Logout</a>

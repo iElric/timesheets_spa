@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { Table, Form, Button, Alert, Col, Row } from "react-bootstrap";
 import { Redirect } from "react-router";
-import { get_sheet } from "./ajax";
+import { show_sheet } from "../ajax";
 
 class ShowTimeSheet extends React.Component {
   constructor(props) {
@@ -21,51 +21,80 @@ class ShowTimeSheet extends React.Component {
     });
   }
 
+  date_changed(data) {
+    this.props.dispatch({
+      type: "CHANGE_DATE",
+      data: data
+    })
+  }
+
   render() {
+    let { tasks, errors } = this.props;
+    console.log(tasks);
+    let error_msg = null;
+    if (errors) {
+      error_msg = <Alert variant="danger">{errors}</Alert>;
+    }
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
-    let { date, status, worker_id, id, job_code, hour, desc } = this.props;
-    if (date.length === 0) {
-      let current_worker_id = JSON.parse(localStorage.getItem("session"))
-        .worker_id;
-      get_sheet(current_worker_id);
-      return (
-        <div>
-          <h1>Show Sheet</h1>
-          <p>Loading...</p>
-        </div>
-      );
-    }
-
-    //this.renderTableData();
-    console.log(Array.isArray(job_code));
     return (
-        
-      <Table>
-        {date.map((x, i) => (
-          <div>
-            <thead>
-              <th>Date: {x}</th> 
-              <th>Status: {status[i] == true ? "Approved" : "Not Approved" }</th> 
-              <th>worker_id: {worker_id[i]}</th>
-            </thead>
-            {job_code[i].map((y, j) => {
-              return <tbody>
+      <div>
+        <Form>
+          <Form.Row>
+            <Form.Label>date</Form.Label>
+            <input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
+          </Form.Row>
+          <Button variant="primary" onClick={() => {
+            show_sheet(this);
+          }}>
+            Submit
+        	</Button>
+        </Form>
+
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Job Code</th>
+              <th>Spent Hours</th>
+              <th>Description</th>
+              <th>Approved</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              tasks.map((t, i) => {
                 <tr>
-                  {" "}
-                  <td>JobCode: {job_code[i][j]}</td> <td>Hour: {hour[i][j]}</td><td> Note:{" "}</td>
-              </tr>
-              </tbody>;
-            })}
-          </div>
-        ))}
-      </Table>
-    );
+                  <td>
+                    {i + 1}
+                  </td>
+                  <td>
+                    {t.job_code}
+                  </td>
+                  <td>
+                    {t.spent_hours}
+                  </td>
+                  <td>
+                    {t.desc}
+                  </td>
+                  <td>
+                    {t.status}
+                  </td>
+                </tr>;
+              })
+            }
+          </tbody>
+        </Table>
+      </div>
+
+    )
   }
 }
+
+
 function state2props(state) {
-  return state.all_sheet;
+  return state.show_timesheets;
 }
 
 export default connect(state2props)(ShowTimeSheet);

@@ -103,7 +103,7 @@ class TimesheetsNew extends React.Component {
 			<div>
 				<Form>
 					<Form.Row>
-						<Form.Label>date</Form.Label>
+						<Form.Label>date </Form.Label>
 						<input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
 					</Form.Row>
 					<Task onJobCode={e => this.jobcode_changed(e.value, 0)}
@@ -142,7 +142,7 @@ class TimesheetsNew extends React.Component {
 						create_sheet(this);
 					}}>
 						Submit
-        </Button>
+        			</Button>
 				</Form>
 			</div>
 
@@ -153,7 +153,7 @@ class TimesheetsNew extends React.Component {
 
 function Task(props) {
 	let { options, onJobCode, onHour, onDesc } = props;
-	options = _.map(options, (o)=>{return {value: o, label: o}});
+	options = _.map(options, (o) => { return { value: o, label: o } });
 	//console.log(options);
 	return (
 		<Form.Row>
@@ -165,7 +165,7 @@ function Task(props) {
 							{option.displayValue}
 						</option>
 					))} */}
-				<Select options = {options} onChange={onJobCode} defaultValue={ options[0] }/>
+				<Select options={options} onChange={onJobCode} defaultValue={options[0]} />
 			</Form.Group >
 
 			<Form.Group as={Col} controlId="formGridHour">
