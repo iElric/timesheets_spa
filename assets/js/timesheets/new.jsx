@@ -7,6 +7,7 @@ import { Form, Button, Alert, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import { all_jobcodes } from '../ajax';
 import { create_sheet } from '../ajax';
+import _ from 'lodash';
 
 
 class TimesheetsNew extends React.Component {
@@ -105,35 +106,35 @@ class TimesheetsNew extends React.Component {
 						<Form.Label>date</Form.Label>
 						<input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
 					</Form.Row>
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 0)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 0)}
 						onHour={e => this.hour_changed(e.target.value, 0)}
 						onDesc={e => this.desc_changed(e.target.value, 0)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 1)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 1)}
 						onHour={e => this.hour_changed(e.target.value, 1)}
 						onDesc={e => this.desc_changed(e.target.value, 1)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 2)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 2)}
 						onHour={e => this.hour_changed(e.target.value, 2)}
 						onDesc={e => this.desc_changed(e.target.value, 2)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 3)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 3)}
 						onHour={e => this.hour_changed(e.target.value, 3)}
 						onDesc={e => this.desc_changed(e.target.value, 3)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 4)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 4)}
 						onHour={e => this.hour_changed(e.target.value, 4)}
 						onDesc={e => this.desc_changed(e.target.value, 4)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 5)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 5)}
 						onHour={e => this.hour_changed(e.target.value, 5)}
 						onDesc={e => this.desc_changed(e.target.value, 5)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 6)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 6)}
 						onHour={e => this.hour_changed(e.target.value, 6)}
 						onDesc={e => this.desc_changed(e.target.value, 6)}
 						options={options} />
-					<Task onJobCode={e => this.jobcode_changed(e.target.value, 7)}
+					<Task onJobCode={e => this.jobcode_changed(e.value, 7)}
 						onHour={e => this.hour_changed(e.target.value, 7)}
 						onDesc={e => this.desc_changed(e.target.value, 7)}
 						options={options} />
@@ -152,6 +153,7 @@ class TimesheetsNew extends React.Component {
 
 function Task(props) {
 	let { options, onJobCode, onHour, onDesc } = props;
+	options = _.map(options, (o)=>{return {value: o, label: o}});
 	//console.log(options);
 	return (
 		<Form.Row>
@@ -163,8 +165,7 @@ function Task(props) {
 							{option.displayValue}
 						</option>
 					))} */}
-				<Form.Control type="job_code" placeholder="Enter Job Code" onChange={onJobCode} />
-				<Select options = {options}/>
+				<Select options = {options} onChange={onJobCode} defaultValue={ options[0] }/>
 			</Form.Group >
 
 			<Form.Group as={Col} controlId="formGridHour">
