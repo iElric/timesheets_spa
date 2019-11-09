@@ -53,13 +53,15 @@ class ApproveTimeSheet extends React.Component {
 			<div>
 				<Form>
 					<Form.Row>
-						<Form.Label>date</Form.Label>
-						<input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
+						<Form.Group as={Col} controlId="formGridJob">
+							<Form.Label>date</Form.Label>
+							<input type="date" className="date_new" onChange={(e) => this.date_changed(e.target.value)} />
+						</Form.Group>
 					</Form.Row>
 					<Form.Row>
 						<Select options={options} onChange={(e) => this.worker_changed(e.value)} defaultValue={options[0]} />
 					</Form.Row>
-					<Button variant="primary" onClick={() => {
+					<Button size="lg" variant="primary" onClick={() => {
 						show_worker_sheet(this);
 					}}>
 						Submit
@@ -100,7 +102,7 @@ class ApproveTimeSheet extends React.Component {
 						}
 					</tbody>
 				</Table>
-				<ApproveButton onButtonClick={() => approve(this)} tasks = {tasks}/>
+				<ApproveButton onButtonClick={() => approve(this)} tasks={tasks} />
 			</div>
 		);
 	}
@@ -114,8 +116,8 @@ function ApproveButton(props) {
 	let { onButtonClick, tasks } = props;
 	if (tasks.length !== 0 && !tasks[0].status) {
 		return (
-		<Button variant="primary" onClick={onButtonClick}>
-			Approve
+			<Button size="lg" variant="primary" onClick={onButtonClick}>
+				Approve
 		</Button>)
 	} else {
 		return null;

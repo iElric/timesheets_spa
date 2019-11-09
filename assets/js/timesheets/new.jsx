@@ -102,10 +102,6 @@ class TimesheetsNew extends React.Component {
 		return (
 			<div>
 				<Form>
-					<Form.Row>
-						<Form.Label>date </Form.Label>
-						<input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
-					</Form.Row>
 					<Task onJobCode={e => this.jobcode_changed(e.value, 0)}
 						onHour={e => this.hour_changed(e.target.value, 0)}
 						onDesc={e => this.desc_changed(e.target.value, 0)}
@@ -138,7 +134,13 @@ class TimesheetsNew extends React.Component {
 						onHour={e => this.hour_changed(e.target.value, 7)}
 						onDesc={e => this.desc_changed(e.target.value, 7)}
 						options={options} />
-					<Button variant="primary" onClick={() => {
+					<Form.Row>
+						<Form.Group as={Col} controlId="formGridJob">
+							<Form.Label>date </Form.Label>
+							<input type="date" className="date_new" onChange={(e) => this.date_changed(e.target.value)} />
+						</Form.Group >
+					</Form.Row>
+					<Button size="lg" variant="primary" onClick={() => {
 						create_sheet(this);
 					}}>
 						Submit
@@ -165,17 +167,17 @@ function Task(props) {
 							{option.displayValue}
 						</option>
 					))} */}
-				<Select options={options} onChange={onJobCode} defaultValue={options[0]} />
+				<Select className="select" options={options} onChange={onJobCode} defaultValue={options[0]} />
 			</Form.Group >
 
 			<Form.Group as={Col} controlId="formGridHour">
 				<Form.Label>Hour</Form.Label>
-				<Form.Control type="hour" placeholder="Hour" onChange={onHour} />
+				<Form.Control type="hour" className="input_box" placeholder="Spent Hours" onChange={onHour} />
 			</Form.Group>
 
 			<Form.Group as={Col} controlId="formGridDesc">
 				<Form.Label>Desc</Form.Label>
-				<Form.Control type="desc" placeholder="Enter Desc" onChange={onDesc} />
+				<Form.Control type="desc" className="input_box" placeholder="Enter a Description" onChange={onDesc} />
 			</Form.Group>
 		</Form.Row >
 	)

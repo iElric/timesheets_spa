@@ -118,6 +118,7 @@ defmodule TimesheetsSpaWeb.SheetController do
   end
 
   def show_sheet(conn, %{"user_id" => user_id, "date" => date}) do
+    IO.inspect date
     date =
       if date === "" do
         Date.utc_today()
@@ -160,6 +161,7 @@ defmodule TimesheetsSpaWeb.SheetController do
     render(conn, "show_sheet.json", tasks: tasks)
   end
 
+  @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     sheet = Sheets.get_sheet!(id)
     render(conn, "show.json", sheet: sheet)

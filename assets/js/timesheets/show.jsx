@@ -42,10 +42,12 @@ class ShowTimeSheet extends React.Component {
       <div>
         <Form>
           <Form.Row>
-            <Form.Label>date</Form.Label>
-            <input type="date" className="form_control mr-sm-2" onChange={(e) => this.date_changed(e.target.value)} />
+            <Form.Group as={Col} controlId="formGridJob">
+              <Form.Label>date</Form.Label>
+              <input type="date" className="date_new" onChange={(e) => this.date_changed(e.target.value)} />
+            </Form.Group>
           </Form.Row>
-          <Button variant="primary" onClick={() => {
+          <Button size="lg" variant="primary" onClick={() => {
             show_sheet(this);
           }}>
             Submit
@@ -66,23 +68,23 @@ class ShowTimeSheet extends React.Component {
             {
               tasks.map((t, i) => {
                 return (
-                <tr>
-                  <td>
-                    {i + 1}
-                  </td>
-                  <td>
-                    {t.job_code}
-                  </td>
-                  <td>
-                    {t.spent_hours}
-                  </td>
-                  <td>
-                    {t.desc}
-                  </td>
-                  <td>
-                    {t.status.toString()}
-                  </td>
-                </tr>);
+                  <tr>
+                    <td>
+                      {i + 1}
+                    </td>
+                    <td>
+                      {t.job_code}
+                    </td>
+                    <td>
+                      {t.spent_hours}
+                    </td>
+                    <td>
+                      {t.desc}
+                    </td>
+                    <td>
+                      {t.status.toString()}
+                    </td>
+                  </tr>);
               })
             }
           </tbody>

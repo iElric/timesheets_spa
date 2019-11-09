@@ -56,7 +56,7 @@ class Login extends React.Component {
             (ev) => this.changed({password: ev.target.value})} />
         </Form.Group>
         <Form.Group controlId="submit">
-          <Button variant="primary" onClick={() => submit_login(this)}>
+          <Button size="lg" variant="primary" onClick={() => submit_login(this)}>
             Log in
           </Button>
         </Form.Group>

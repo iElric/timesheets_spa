@@ -102,9 +102,10 @@ export function create_sheet(form) {
 }
 
 export function show_sheet(form) {
-  let data = store.getState().new_timesheets;
+  let data = store.getState().show_timesheets;
   let user_id = JSON.parse(localStorage.getItem("session")).user_id;
   post("/sheets/show_sheet", Object.assign({}, data, { user_id: user_id })).then(resp => {
+    console.log(resp.tasks);
     store.dispatch({
       type: "CHANGE_TASKS",
       data: resp.tasks,
