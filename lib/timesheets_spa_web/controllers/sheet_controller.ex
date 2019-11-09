@@ -59,7 +59,7 @@ defmodule TimesheetsSpaWeb.SheetController do
 
     total_hours = Enum.reduce(hours, 0, fn h, acc -> h + acc end)
 
-    if total_hours === 8 do
+    if total_hours <= 8 do
       current_user = user_id
 
       {ok_or_error, sheet_or_info} =
@@ -74,12 +74,12 @@ defmodule TimesheetsSpaWeb.SheetController do
         # insert these tasks
         # here we use a not elegant solution to solve the problem, since in the previous version
         # of timesheets, jobcode can not be empty, but now it can be. To get this work on front end
-        # is not easy so I fix this in the backend. We assume the default id 0 is choosed for empty
-        # jobcode
+        # is not easy so I fix this in the backend.
+        [head | _] = TimesheetsSpa.Jobs.list_jobcodes()
         job_ids =
           Enum.map(jobcodes, fn jobcode ->
             if jobcode === "" do
-              1
+              TimesheetsSpa.Jobs.get_job_id_by_jobcode(head)
             else
               TimesheetsSpa.Jobs.get_job_id_by_jobcode(jobcode)
             end

@@ -1,0 +1,35 @@
+
+Web Dev Fall 2019 HW07 Status
+
+Answer the following questions:
+
+
+1. What's your name?
+Yexin Wang
+
+2. What's the URL of the github repo with your work for this HW?
+http://time2.ielric.com/
+
+
+3. What's the version number of your github release?
+
+
+
+4. What's the URL that you deployed to?
+http://time2.ielric.com/
+
+
+5. Is your app functionality complete? If not, what's missing?
+
+
+
+6. Is your app properly deployed? If not, what went wrong?
+
+
+
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Development
+ - Deployment
+ - Submission

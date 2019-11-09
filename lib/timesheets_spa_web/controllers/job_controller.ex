@@ -8,6 +8,7 @@ defmodule TimesheetsSpaWeb.JobController do
 
   def index(conn, _params) do
     jobcodes = Jobs.list_jobcodes()
+    IO.inspect jobcodes
     render(conn, "jobcodes.json", jobcodes: jobcodes)
   end
 

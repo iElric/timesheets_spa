@@ -32,7 +32,8 @@ function new_timesheets(st0 = {
   hours: ["", "", "", "", "", "", "", ""],
   descs: ["", "", "", "", "", "", "", ""],
   date: "",
-  errors: null
+  errors: null,
+  task_num: 8
 }, action) {
   switch (action.type) {
     case "ALL_JOBCODES":
@@ -52,6 +53,10 @@ function new_timesheets(st0 = {
       return Object.assign({}, st0, { hours: new_hours });
     case "CHANGE_DATE":
       return Object.assign({}, st0, { date: action.data });
+    case "PLUS":
+      return Object.assign({}, st0, { task_num: action.data });
+    case "MINUS":
+      return Object.assign({}, st0, { task_num: action.data });
     /* case "INIT_JOBCODES":
       let jb = [];
       for (let i = 0; i < 8; i++) {

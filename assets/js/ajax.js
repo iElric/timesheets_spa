@@ -1,6 +1,5 @@
 import store from './store';
 
-
 export function all_jobcodes() {
   get('/jobs')
     .then((resp) => {

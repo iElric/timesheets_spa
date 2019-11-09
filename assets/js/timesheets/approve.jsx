@@ -2,7 +2,7 @@ import React from 'react';
 
 import Select from 'react-select'
 import { connect } from 'react-redux';
-import { Table, Form, Button } from 'react-bootstrap';
+import { Table, Form, Button, Col } from 'react-bootstrap';
 import { all_workers } from '../ajax';
 import { show_worker_sheet } from '../ajax';
 import { approve } from '../ajax';
@@ -59,7 +59,7 @@ class ApproveTimeSheet extends React.Component {
 						</Form.Group>
 					</Form.Row>
 					<Form.Row>
-						<Select options={options} onChange={(e) => this.worker_changed(e.value)} defaultValue={options[0]} />
+						<Select className="select_approve" options={options} onChange={(e) => this.worker_changed(e.value)} defaultValue={options[0]} />
 					</Form.Row>
 					<Button size="lg" variant="primary" onClick={() => {
 						show_worker_sheet(this);
