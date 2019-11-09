@@ -1,4 +1,20 @@
-# TimesheetsSpa
+# Timesheets
+
+## As a manager
+* View the workers' timesheets by date and worker name
+* Approve the workers' timesheets
+
+## As a worker
+* Create a timesheet on any day
+* View your timesheets by date
+
+## Notice
+* A worker can only have one timesheet per day, create duplicate sheet won't success
+* A manager can only view his/her supervisees' sheets
+* When you log in, you will have different view depends on you user role
+* The job budget have been properly subtracted
+* If you don't selcet a date, default is today
+
 
 To start your Phoenix server:
 
